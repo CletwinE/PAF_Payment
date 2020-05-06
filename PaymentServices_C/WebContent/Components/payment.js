@@ -12,6 +12,7 @@ $(document).on("click", "#btnSave", function (event) {
 	$("#alertError").text("");
 	$("#alertError").hide();
 
+
 	//Form validation-------------------
 	var status = validatePaymentForm();
 	if (status != true) {
@@ -24,7 +25,6 @@ $(document).on("click", "#btnSave", function (event) {
 	// If valid-------------------------
 
 	//$("#formPayment").submit();
-
 
 	var type = ($("#hidPaymentIDSave").val() == "") ? "POST" : "PUT";
 
@@ -73,8 +73,12 @@ function onPaymentSaveComplete(response, status) {
 }
 
 //UPDATE==========================================
-$(document).on("click", ".btnUpdate", function (event) {
-	$("#hidPaymentIDSave").val($(this).closest("tr").find('#hidPaymentIDUpdate').val());
+$(document).on(
+	"click", 
+	".btnUpdate", 
+	function (event) {
+	$("#hidPaymentIDSave").val(
+		$(this).closest("tr").find('#hidPaymentIDUpdate').val());
 	$("#payCardNo").val($(this).closest("tr").find('td:eq(0)').text());
 	$("#payName").val($(this).closest("tr").find('td:eq(1)').text());
 	$("#payDate").val($(this).closest("tr").find('td:eq(2)').text());

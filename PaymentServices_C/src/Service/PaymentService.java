@@ -59,7 +59,7 @@ public class PaymentService extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map paras = getParasMap(request);
 		
-		String output = payObj.updatePayment(paras.get("hidPaymentIDSave").toString(),paras.get("payCardNo").toString(), paras.get("payName").toString(), paras.get("payDate").toString(), paras.get("payAmount").toString());
+		String output = payObj.updatePayment(paras.get("hidPaymentIDSave").toString(), paras.get("payCardNo").toString(), paras.get("payName").toString(), paras.get("payDate").toString(), paras.get("payAmount").toString());
 		response.getWriter().write(output); 
 	}
 	

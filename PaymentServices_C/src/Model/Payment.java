@@ -36,16 +36,40 @@ public class Payment {
 				String payname = rs.getString("payName");
 				String paydate = rs.getString("payDate");
 				String payamount = Integer.toString(rs.getInt("payAmount"));
+				
+				
+		
+				
+				
+				
+				
+				
+				
+				
+				
 
 				// Add into the html table
-				output += "<tr>" + "<td>" + cardno + "</td>";
+				output += "<tr><td><input id='hidPaymentIDUpdate' name='hidPaymentIDUpdate' type='hidden' value='" + paymentid + "'>"+ cardno + "</td>";
+	
 				output += "<td>" + payname + "</td>";
 				output += "<td>" + paydate + "</td>";
 				output += "<td>" + payamount + "</td>";
 
 				// buttons
-				output += "<td><input name='btnUpdate' type='button'value='Update' class='btnUpdate btn btn-secondary'></td><td><input name='btnRemove' type='button'value='Remove'class='btnRemove btn btn-danger' data-payid='"
+				output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
+						+ "<td><input name='btnRemove' type='button'value='Remove'class='btnRemove btn btn-danger' data-payid='"
 						+ paymentid + "'>" + "</td></tr>";
+				
+				
+				/*
+				 * output +=
+				 * "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
+				 * +
+				 * "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-itemid='"
+				 * + itemID + "'>" + "</td></tr>";
+				 */
+				
+				
 
 			}
 
