@@ -128,9 +128,25 @@ function onPaymentDeleteComplete(response, status) {
 
 //CLIENT-MODEL================================================================
 function validatePaymentForm() {
+
+// card no
+	if ($("#payCardNo").val().trim() == "") {
+		return "Insert card no.";
+	}
+	// is numerical value
+	var tempCardNo = $("#payCardNo").val().trim();
+	if (!$.isNumeric(tempCardNo)) {
+		return "Insert a numerical value for Card.";
+	}
+
 	// name
 	if ($("#payName").val().trim() == "") {
 		return "Insert name.";
+	}
+
+	// date
+	if ($("#payDate").val().trim() == "") {
+		return "Insert date.";
 	}
 
 	// amount
@@ -147,18 +163,7 @@ function validatePaymentForm() {
 	// convert to decimal amount
 	$("#payAmount").val(parseFloat(tmpPrice).toFixed(2));
 
-	// date
-	if ($("#payDate").val().trim() == "") {
-		return "Insert date.";
-	}
-
-
-
-	// card no
-	if ($("#payCardNo").val().trim() == "") {
-		return "Insert card no.";
-	}
-
+	
 
 	return true;
 }
