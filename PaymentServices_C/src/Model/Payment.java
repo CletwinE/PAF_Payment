@@ -22,8 +22,8 @@ public class Payment {
 
 			// Prepare the html table to be displayed
 
-			output = "<table border=\"1\">" + "<tr>" + "<th>Card No</th>" + "<th>Paid Name</th>"
-					+ "<th>Paid Date</th>" + "<th>Paid Amount</th>";
+			
+			output = "<table border='1'><th>Card No</th><th>Paid Name</th><th>Paid Date</th><th>Paid Amount</th><th>Update</th><th>Remove</th></tr>";
 
 			String query = "select * from payment";
 			Statement stmt = con.createStatement();
@@ -43,6 +43,10 @@ public class Payment {
 				output += "<td>" + paydate + "</td>";
 				output += "<td>" + payamount + "</td>";
 
+				// buttons
+				output += "<td><input name='btnUpdate' type='button'value='Update' class='btnUpdate btn btn-secondary'></td><td><input name='btnRemove' type='button'value='Remove'class='btnRemove btn btn-danger' data-payid='"
+						+ paymentid + "'>" + "</td></tr>";
+
 			}
 
 			con.close();
@@ -55,7 +59,7 @@ public class Payment {
 		return output;
 	}
 
-	public String insertPayment(PaymentBean doc) {
+	public String insertPayment(String cardNo, String name, String date, String amount) {
 
 		String output = "";
 		try {
@@ -65,30 +69,34 @@ public class Payment {
 				return "Error while connecting to the database for inserting.";
 			}
 			// create a prepared statement
-			String query = "insert into payment" + "(`PayID`,`cardNo`,`payName`,`payDate`,`payAmount`)"
+			String query = " insert into payment(PayID, cardNo, payName, payDate, payAmount)"
 					+ " values (?, ?, ?, ?, ?)";
 
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			// binding values
 			preparedStmt.setInt(1, 0);
-			preparedStmt.setInt(2, doc.getCardNo());
-			preparedStmt.setString(3, doc.getPayName());
-			preparedStmt.setString(4, doc.getPayDate());
-			preparedStmt.setDouble(5, doc.getAmount());
+			preparedStmt.setString(2, cardNo);
+			preparedStmt.setString(3, name);
+			preparedStmt.setString(4, date);
+			preparedStmt.setDouble(5, Double.parseDouble(amount));
 
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted Payment successfully";
+			
+			String newPayment = readPayment();
+			 output = "{\"status\":\"success\", \"data\": \"" +
+					 newPayment + "\"}"; 
+			
 		} catch (Exception e) {
-			output = "Error while inserting Payment Info";
+			output = "{\"status\":\"error\", \"data\": \"Error while inserting the peyment.\"}"; 
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
 
-	public String deletePayment(String paymentID) {
+	public String deletePayment(String id) {
 		String output = "";
 		try {
 
@@ -104,21 +112,24 @@ public class Payment {
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			// binding values
-			preparedStmt.setInt(1, Integer.parseInt(paymentID));
+			preparedStmt.setInt(1, Integer.parseInt(id));
 
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Deleted Payment successfully";
+			//output = "Deleted successfully";
+			String newPayment = readPayment();
+			 output = "{\"status\":\"success\", \"data\": \"" +
+			 newPayment + "\"}"; 
 
 		} catch (Exception e) {
-			output = "Error while deleting the payment.";
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the payment.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
 
-	public String updatePayment(PaymentBean doc) {
+	public String updatePayment(String id, String cardNo, String name, String date, String amount) {
 
 		String output = "";
 
@@ -136,18 +147,19 @@ public class Payment {
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			// binding values
-			preparedStmt.setInt(1, doc.getCardNo());
-			preparedStmt.setString(2, doc.getPayName());
-			preparedStmt.setString(3, doc.getPayDate());
-			preparedStmt.setDouble(4, doc.getAmount());
-			preparedStmt.setInt(5, doc.getPaymentID());
-
+			preparedStmt.setString(1, cardNo);
+			preparedStmt.setString(2, name);
+			preparedStmt.setString(3, date);
+			preparedStmt.setDouble(4, Double.parseDouble(amount));
+			preparedStmt.setInt(5, Integer.parseInt(id));
+			
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Updated successfully";
+			String newPayment = readPayment();
+			output = "{\"status\":\"success\", \"data\": \"" + newPayment + "\"}";
 		} catch (Exception e) {
-			output = "Error while updating the item.";
+			output = "{\"status\":\"error\", \"data\": \"Error while updating the payment.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;

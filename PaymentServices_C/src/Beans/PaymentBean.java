@@ -34,21 +34,21 @@ public class PaymentBean {
 
 	}
 
-	public PaymentBean(int paymentID, int cardNo, String nameOnCard, String expDate, int cvc) {
+	public PaymentBean(int paymentID, int cardNo, String PayName, String PayDate, double amount) {
 		super();
 		this.paymentID = paymentID;
 		this.cardNo = cardNo;
-		this.payName = nameOnCard;
-		this.payDate = expDate;
-		this.amount = cvc;
+		this.payName = PayName;
+		this.payDate = PayDate;
+		this.amount = amount;
 	}
 
-	public PaymentBean(int cardNo, String nameOnCard, String expDate, int cvc) {
+	public PaymentBean(int cardNo, String payName, String payDate, Double amount) {
 		super();
 		this.cardNo = cardNo;
-		this.payName = nameOnCard;
-		this.payDate = expDate;
-		this.amount = cvc;
+		this.payName = payName;
+		this.payDate = payDate;
+		this.amount = amount;
 	}
 
 	
